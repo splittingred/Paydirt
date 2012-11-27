@@ -10,7 +10,7 @@ spl_autoload_register(function ($className) {
         print_r($e->getTrace());
     }
 });
-define('PAYDIRT_PATH',dirname(dirname(__FILE__)).'/');
+defined('PAYDIRT_PATH') or define('PAYDIRT_PATH',dirname(dirname(__FILE__)).'/');
 
 $paths = explode(PATH_SEPARATOR, get_include_path());
 $paths[] = PAYDIRT_PATH;

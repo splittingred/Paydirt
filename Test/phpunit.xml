@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+	bootstrap="./Bootstrap.php"
+	colors="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	stopOnError="false"
+	stopOnFailure="false"
+	stopOnIncomplete="false"
+	stopOnSkipped="false">
+	<testsuites>
+		<testsuite name="Paydirt Test Suite">
+			<directory suffix=".php">./Paydirt/</directory>
+			<directory suffix=".php">./Paydirt/Chargify</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<blacklist>
+			<directory suffix=".php">PEAR_INSTALL_DIR</directory>
+			<directory suffix=".php">PHP_LIBDIR</directory>
+		</blacklist>
+	</filter>
+</phpunit>
