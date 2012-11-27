@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+.nbproject
+.settings
+.project
+test/config.inc.php
+/test-*.php
+/vendor
