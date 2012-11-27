@@ -48,12 +48,12 @@ class Product extends Object implements \Paydirt\ProductInterface {
     );
 
     public static function getPostUri($criteria = array()) {
-        return 'product_families/'.CHARGIFY_CLOUD_PRODUCT_FAMILY_ID.'/products';
+        return 'product_families/'.CHARGIFY_PRODUCT_FAMILY_ID.'/products';
     }
 
     public function save() {
         if ($this->isNew()) {
-            //$this->set('product_family_id',CHARGIFY_CLOUD_PRODUCT_FAMILY_ID);
+            //$this->set('product_family_id',CHARGIFY_PRODUCT_FAMILY_ID);
         }
         return parent::save();
     }
