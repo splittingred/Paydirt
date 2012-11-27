@@ -1,7 +1,7 @@
 <?php
 namespace Paydirt\Chargify;
 
-class Coupon extends \Paydirt\Chargify\Object implements \Paydirt\CouponInterface {
+class Coupon extends Object implements \Paydirt\CouponInterface {
     public static $uri = 'coupons';
     public static $rootNode = 'coupon';
     public static $getUri = 'coupons/find';

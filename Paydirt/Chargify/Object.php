@@ -81,7 +81,7 @@ abstract class Object extends \Paydirt\Object implements \Paydirt\ObjectInterfac
      */
     public function getClient() {
         $this->client = new \Paydirt\Rest\Client(array(
-            'base_url' => 'https://'.CHARGIFY_DOMAIN.'.chargify.com',
+            'base_url' => 'https://'.$this->driver->config['domain'].'.chargify.com',
             'supressSuffix' => false,
             'format' => 'json',
             'headers' => array(
@@ -95,7 +95,7 @@ abstract class Object extends \Paydirt\Object implements \Paydirt\ObjectInterfac
             'sendToken' => false,
             'addMethodParameter' => false,
             'useRootNodeInJSON' => true,
-            'username' => $this->driver->config['apiKey'],
+            'username' => $this->driver->config['api_key'],
             'password' => 'x',
         ));
     }
@@ -237,7 +237,7 @@ abstract class Object extends \Paydirt\Object implements \Paydirt\ObjectInterfac
     }
 
     public function afterSave(array $response = array()) {
-        $this->driver->log(LOG_LEVEL_INFO,'[Payments] AfterSave with data '.print_r($response,true));
+        $this->driver->log(Driver::LOG_LEVEL_INFO,'[Paydirt] AfterSave with data '.print_r($response,true));
         if (isset($response[static::$rootNode])) {
             $this->fromArray($response[static::$rootNode],'',$this->isNew());
         } else {
@@ -249,7 +249,7 @@ abstract class Object extends \Paydirt\Object implements \Paydirt\ObjectInterfac
         $uri = $this->getRemoveUri();
         $result = $this->client->delete($uri);
         $response = $result->process();
-        $this->driver->log(LOG_LEVEL_INFO,'[Payments] DELETE to '.$this->getRemoveUri().' : '.print_r($result->responseBody,true));
+        $this->driver->log(Driver::LOG_LEVEL_INFO,'[Paydirt] DELETE to '.$this->getRemoveUri().' : '.print_r($result->responseBody,true));
         if (empty($response)) return false;
         if (!empty($response['error'])) {
             $this->_handleErrors($response);

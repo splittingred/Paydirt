@@ -1,7 +1,7 @@
 <?php
 namespace Paydirt\Chargify;
 
-class Account extends \Paydirt\Chargify\Object implements \Paydirt\AccountInterface {
+class Account extends Object implements \Paydirt\AccountInterface {
     public static $uri = 'customers';
     public static $rootNode = 'customer';
     public static $primaryKeyField = 'id';
@@ -80,7 +80,7 @@ class Account extends \Paydirt\Chargify\Object implements \Paydirt\AccountInterf
         $result = $this->client->put('accounts/'.$this->get('account_code').'/reopen');
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Could not reopen account: '.print_r($this->toArray(),true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Could not reopen account: '.print_r($this->toArray(),true));
             return false;
         }
         return true;

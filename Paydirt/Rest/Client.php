@@ -9,7 +9,7 @@ namespace Paydirt\Rest;
 class Client {
     /** @var array $config */
     public $config = array();
-    /** @var $handle cURL resource handle. */
+    /** @var object $handle cURL resource handle. */
     public $handle;
 
     /** @var object $response Response body. */
@@ -450,16 +450,16 @@ class RestClientRequest {
     }
 
     /**
-     * @param DOMDocument $doc
-     * @param DOMNode $node
+     * @param \DOMDocument $doc
+     * @param \DOMNode $node
      * @param array $parameters
      */
     protected function _populateXmlDoc(&$doc, &$node, &$parameters) {
-        /** @var $val DOMNode|Recurly_Resource */
+        /** @var $val \DOMNode */
         foreach ($parameters as $key => $val) {
-            if ($val instanceof Recurly_CurrencyList) {
+            if ($val instanceof \Recurly_CurrencyList) {
                 $val->populateXmlDoc($doc, $node, $parameters);
-            } else if ($val instanceof Recurly_Resource) {
+            } else if ($val instanceof \Recurly_Resource) {
                 $attribute_node = $node->appendChild($doc->createElement($key));
                 $this->_populateXmlDoc($doc, $attribute_node, $val);
             } else if (is_array($val)) {
@@ -599,7 +599,7 @@ class RestClientResponse {
     /**
      * Convert XML into a string
      *
-     * @param string|SimpleXMLElement $xml
+     * @param string|\SimpleXMLElement $xml
      * @param mixed $attributesKey
      * @param mixed $childrenKey
      * @param mixed $valueKey
@@ -626,7 +626,7 @@ class RestClientResponse {
 
         $children = array();
         $first = true;
-        /** @var SimpleXMLElement $child */
+        /** @var \SimpleXMLElement $child */
         foreach($xml->children() as $elementName => $child){
             if (!empty($this->config['skipRecursiveParseXml'])) {
                 $value = (string)$child;

@@ -6,3 +6,4 @@
 test/config.inc.php
 /test-*.php
 /vendor
+config.inc.php

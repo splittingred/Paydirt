@@ -1,7 +1,7 @@
 <?php
 namespace Paydirt\Chargify;
 
-class Plan extends \Paydirt\Chargify\Object implements \Paydirt\PlanInterface {
+class Plan extends Object implements \Paydirt\PlanInterface {
     public static $uri = 'products';
     public static $rootNode = 'product';
     public static $getUri = 'products/handle';

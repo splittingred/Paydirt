@@ -1,7 +1,7 @@
 <?php
 namespace Paydirt\Chargify;
 
-class Transaction extends \Paydirt\Chargify\Object implements \Paydirt\TransactionInterface {
+class Transaction extends Object implements \Paydirt\TransactionInterface {
     public static $uri = 'transactions';
     public static $rootNode = 'transaction';
 

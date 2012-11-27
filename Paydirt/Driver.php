@@ -1,11 +1,32 @@
 <?php
 namespace Paydirt;
+spl_autoload_register(function ($className) {
+    $className = ltrim($className, "\\");
+    preg_match('/^(.+)?([^\\\\]+)$/U', $className, $match);
+    $className = str_replace("\\", "/", $match[1]) . str_replace(["\\", "_"], "/", $match[2]) . ".php";
+    try {
+        include_once $className;
+    } catch (\Exception $e) {
+        print_r($e->getTrace());
+    }
+});
+define('PAYDIRT_PATH',dirname(dirname(__FILE__)).'/');
+
+$paths = explode(PATH_SEPARATOR, get_include_path());
+$paths[] = PAYDIRT_PATH;
+set_include_path(implode(PATH_SEPARATOR,$paths));
+
 /**
  * @package paydirt
  * @subpackage payments
  */
 abstract class Driver {
     const MYSQL_TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S';
+    const LOG_LEVEL_DEBUG = 0;
+    const LOG_LEVEL_INFO = 0;
+    const LOG_LEVEL_WARN = 0;
+    const LOG_LEVEL_ERROR = 0;
+    const LOG_LEVEL_FATAL = 0;
 
     /** @var array $config */
     public $config = array();
@@ -27,16 +48,12 @@ abstract class Driver {
     public static function getInstance($driverName = 'Chargify',array $config = array()) {
         $driver = null;
         $driverName = strtolower($driverName);
-        $apiFile = dirname(__FILE__).'/'.$driverName.'/Api.php';
-        if (file_exists($apiFile)) {
-            require_once $apiFile;
-            $className = 'kc'.ucfirst($driverName).'PaymentDriver';
-            if (class_exists($className)) {
-                /** @var Driver $driver */
-                $driver = new $className($config);
-                $driver->initialize();
-                $driver->setPath(dirname($apiFile).'/');
-            }
+        $className = '\\Paydirt\\'.ucfirst($driverName).'\\Driver';
+        if (class_exists($className)) {
+            /** @var Driver $driver */
+            $driver = new $className($config);
+            $driver->initialize();
+            $driver->setPath(dirname(__FILE__).'/'.$driverName.'/');
         }
         return $driver;
     }
@@ -137,18 +154,12 @@ abstract class Driver {
         $driverName = ucfirst(strtolower($this->driverName));
 
         if (!in_array($className,$this->loadedClasses)) {
-            $fileName = $this->path.$className.'.php';
-            if (!file_exists($fileName) || !is_readable($fileName)) {
-                //$this->log(::LOG_LEVEL_ERROR,'[kc] Could not load payment object class at: '.$fileName);
-                return false;
-            }
-            require_once $fileName;
             $this->loadedClasses[] = $className;
         }
 
-        $trueClassName = $driverName.$className;
+        $trueClassName = '\\Paydirt\\'.$driverName.'\\'.$className;
         if (!class_exists($trueClassName)) {
-            $this->log(LOG_LEVEL_ERROR,'[kc] Payment object class '.$trueClassName.' not found!');
+            $this->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Payment object class '.$trueClassName.' not found!');
             return false;
         }
         return $trueClassName;

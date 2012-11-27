@@ -1,6 +1,6 @@
 <?php
 namespace Paydirt\Chargify;
-class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\SubscriptionInterface {
+class Subscription extends Object implements \Paydirt\SubscriptionInterface {
     public static $uri = 'subscriptions';
     public static $rootNode = 'subscription';
     public static $primaryKeyField = 'id';
@@ -73,7 +73,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Could not expire Subscription in Chargify: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Could not expire Subscription in Chargify: '.print_r($result->responseBody,true));
             return false;
         }
         return true;
@@ -88,7 +88,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Could not unexpire Subscription in Chargify: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Could not unexpire Subscription in Chargify: '.print_r($result->responseBody,true));
             return false;
         }
         return true;
@@ -101,7 +101,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Could not terminate Subscription in Chargify: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Could not terminate Subscription in Chargify: '.print_r($result->responseBody,true));
             return false;
         }
         return true;
@@ -144,7 +144,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Failed to update component quantity. Error: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Failed to update component quantity. Error: '.print_r($result->responseBody,true));
             return false;
         }
         return true;
@@ -169,7 +169,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Failed to migrate subscription. Error: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Failed to migrate subscription. Error: '.print_r($result->responseBody,true));
             return false;
         }
         return true;
@@ -236,7 +236,7 @@ class Subscription extends \Paydirt\Chargify\Object implements \Paydirt\Subscrip
         ));
         $response = $result->process();
         if (empty($response)) {
-            $this->driver->log(LOG_LEVEL_ERROR,'[Paydirt] Failed to refund subscription. Error: '.print_r($result->responseBody,true));
+            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Failed to refund subscription. Error: '.print_r($result->responseBody,true));
             return false;
         }
         return true;

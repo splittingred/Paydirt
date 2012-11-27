@@ -1,7 +1,7 @@
 <?php
 namespace Paydirt\Chargify;
 
-class Stats extends \Paydirt\Chargify\Object implements \Paydirt\StatsInterface {
+class Stats extends Object implements \Paydirt\StatsInterface {
     public static $uri = 'stats';
     public static $rootNode = 'stats';
 
