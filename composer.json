@@ -1,0 +1,16 @@
+{
+    "name": "splittingred/paydirt",
+    "type": "library",
+    "description": "Billing Management System API (Chargify only at this time)",
+    "keywords": ["chargify", "payment", "credit card"],
+    "homepage": "https://github.com/splittingred/paydirt",
+    "authors": [
+        {"name": "Shaun McCormick", "email": "splittingred@gmail.com"}
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-0": { "Paydirt": "/" }
+    }
+}
