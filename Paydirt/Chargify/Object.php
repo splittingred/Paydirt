@@ -46,57 +46,6 @@ abstract class Object extends \Paydirt\Object implements \Paydirt\ObjectInterfac
     }
 
     /**
-     * See if the object has any errors
-     * @return boolean
-     */
-    public function hasErrors() {
-        return !empty($this->errors);
-    }
-
-    /**
-     * Add an error message to the error stack
-     * @param string $message
-     */
-    public function addError($message) {
-        $this->errors[] = $message;
-    }
-
-    /**
-     * Add a validation error for a specific field
-     * @param string $key
-     * @param string $message
-     */
-    public function addFieldError($key,$message) {
-        $this->errors[$key] = $message;
-    }
-
-    /**
-     * Get a field-specific error message
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function getFieldError($key) {
-        return $this->errors[$key];
-    }
-
-    /**
-     * Get all the current errors
-     *
-     * @return array
-     */
-    public function getErrors() {
-        return $this->errors;
-    }
-
-    /**
-     * Clear all errors
-     */
-    public function clearErrors() {
-        $this->errors = array();
-    }
-
-    /**
      * Load the Client driver for this object
      */
     public function getClient() {

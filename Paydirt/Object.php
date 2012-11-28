@@ -189,8 +189,9 @@ abstract class Object implements ObjectInterface {
         $this->fields[$k] = $v;
         $this->setDirty(true);
     }
+
     /**
-     * @param boolean $status
+     * @param bool $status
      */
     public function setDirty($status) {
         $this->_dirty = (boolean)$status;
@@ -217,7 +218,8 @@ abstract class Object implements ObjectInterface {
 
     /**
      * See if the object has any errors
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasErrors() {
         return !empty($this->errors);
@@ -256,5 +258,13 @@ abstract class Object implements ObjectInterface {
      */
     public function clearErrors() {
         $this->errors = array();
+    }
+
+    /**
+     * Add an error message to the error stack
+     * @param string $message
+     */
+    public function addError($message) {
+        $this->errors[] = $message;
     }
 }
