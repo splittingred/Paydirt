@@ -19,18 +19,15 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-namespace Paydirt\Chargify;
+namespace Paydirt;
+defined('PAYDIRT_PATH') or define('PAYDIRT_PATH',dirname(dirname(__FILE__)).'/');
+require_once PAYDIRT_PATH.'/config.inc.php';
+require_once PAYDIRT_PATH.'/Paydirt/Paydirt.php';
 
-class Stats extends Object implements \Paydirt\StatsInterface {
-    public static $uri = 'stats';
-    public static $rootNode = 'stats';
+$paths = explode(PATH_SEPARATOR, get_include_path());
+$paths[] = PAYDIRT_PATH;
+set_include_path(implode(PATH_SEPARATOR,$paths));
 
-    protected $_fieldMeta = array(
-        'revenue_this_month'    => 'string',
-        'total_subscriptions'   => 'int',
-        'subscriptions_today'   => 'int',
-        'revenue_today'         => 'string',
-        'total_revenue'         => 'string',
-        'revenue_this_year'     => 'string',
-    );
-}
+ini_set('display_errors', 1);
+error_reporting(E_ALL | E_STRICT);
+

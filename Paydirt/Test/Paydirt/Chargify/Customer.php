@@ -19,18 +19,15 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-namespace Paydirt\Chargify;
+namespace Paydirt\Test\Paydirt\Chargify;
 
-class Stats extends Object implements \Paydirt\StatsInterface {
-    public static $uri = 'stats';
-    public static $rootNode = 'stats';
+class Customer extends \Paydirt\Test\TestCase {
+	public function test_getCustomer() {
+        $customer = $this->driver->getObject('Customer',2528906);
+        $this->assertNotEmpty($customer,'Customer not found!');
+        if (!empty($customer)) {
+            $this->assertInstanceOf('\Paydirt\Chargify\Customer',$customer);
+        }
+	}
 
-    protected $_fieldMeta = array(
-        'revenue_this_month'    => 'string',
-        'total_subscriptions'   => 'int',
-        'subscriptions_today'   => 'int',
-        'revenue_today'         => 'string',
-        'total_revenue'         => 'string',
-        'revenue_this_year'     => 'string',
-    );
 }

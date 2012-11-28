@@ -19,18 +19,23 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-namespace Paydirt\Chargify;
+namespace Paydirt\Test;
 
-class Stats extends Object implements \Paydirt\StatsInterface {
-    public static $uri = 'stats';
-    public static $rootNode = 'stats';
+class TestCase extends \PHPUnit_Framework_TestCase {
+    /** @var \Paydirt\Chargify\Driver $driver */
+    public $driver;
 
-    protected $_fieldMeta = array(
-        'revenue_this_month'    => 'string',
-        'total_subscriptions'   => 'int',
-        'subscriptions_today'   => 'int',
-        'revenue_today'         => 'string',
-        'total_revenue'         => 'string',
-        'revenue_this_year'     => 'string',
-    );
+    public function setUp() {
+        $this->driver = \Paydirt\Driver::getInstance('Chargify',$this->getConfig());
+    }
+
+    public function getConfig() {
+        require_once dirname(dirname(dirname(__FILE__))).'/config.inc.php';
+
+        return array(
+            'api_key' => CHARGIFY_API_KEY,
+            'domain' => CHARGIFY_DOMAIN,
+        );
+    }
+
 }

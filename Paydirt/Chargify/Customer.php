@@ -1,7 +1,27 @@
 <?php
+/*
+ * Paydirt
+ *
+ * Copyright 2012 by Shaun McCormick
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 namespace Paydirt\Chargify;
 
-class Account extends Object implements \Paydirt\AccountInterface {
+class Customer extends Object implements \Paydirt\AccountInterface {
     public static $uri = 'customers';
     public static $rootNode = 'customer';
     public static $primaryKeyField = 'id';
@@ -25,20 +45,6 @@ class Account extends Object implements \Paydirt\AccountInterface {
     );
     protected $_readOnlyAttributes = array('created_at','updated_at','id','payment_description');
 
-    public function getTransactions() {
-        $data = $this->client->get('accounts/'.$this->get('account_code').'/transactions');
-        $data = $data->process();
-
-        $list = array();
-        foreach ($data['transaction'] as $transactionArray) {
-            /** @var \Paydirt\TransactionInterface|\Paydirt\Chargify\Transaction $transaction */
-            $transaction = $this->driver->newObject('Transaction');
-            $transaction->fromArray($transactionArray);
-            $list[] = $transaction;
-        }
-        return $list;
-    }
-
     public function getSubscriptions($state = 'active',$limit = 10,$start = 0) {
         $page = round($start / $limit)+1;
         $data = $this->client->get('customers/'.$this->get('id').'/subscriptions',array(
@@ -58,31 +64,12 @@ class Account extends Object implements \Paydirt\AccountInterface {
         return $list;
     }
 
-    public function getAdjustments() {
-        $data = $this->client->get('accounts/'.$this->get('account_code').'/adjustments');
-        $data = $data->process();
-
-        $list = array();
-        foreach ($data['adjustment'] as $adjustmentArray) {
-            $adjustment = $this->driver->newObject('Adjustment');
-            $adjustment->fromArray($adjustmentArray,'',true);
-            $list[] = $adjustment;
-        }
-        return $list;
-    }
-
 
     public function close() {
         return $this->remove();
     }
 
     public function open() {
-        $result = $this->client->put('accounts/'.$this->get('account_code').'/reopen');
-        $response = $result->process();
-        if (empty($response)) {
-            $this->driver->log(Driver::LOG_LEVEL_ERROR,'[Paydirt] Could not reopen account: '.print_r($this->toArray(),true));
-            return false;
-        }
         return true;
     }
 }

@@ -19,18 +19,20 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-namespace Paydirt\Chargify;
+/**
+ * @var \Paydirt\Driver $paydirt
+ * @package paydirt
+ */
+require_once dirname(dirname(__FILE__)).'/config.inc.php';
+$config = array(
+    'api_key' => CHARGIFY_API_KEY,
+    'domain' => CHARGIFY_DOMAIN,
+);
+require_once dirname(dirname(__FILE__)).'/Paydirt.php';
 
-class Stats extends Object implements \Paydirt\StatsInterface {
-    public static $uri = 'stats';
-    public static $rootNode = 'stats';
-
-    protected $_fieldMeta = array(
-        'revenue_this_month'    => 'string',
-        'total_subscriptions'   => 'int',
-        'subscriptions_today'   => 'int',
-        'revenue_today'         => 'string',
-        'total_revenue'         => 'string',
-        'revenue_this_year'     => 'string',
-    );
+if ($paydirt instanceof \Paydirt\Chargify\Driver) {
+    $plan = $paydirt->getObject('Plan','truck');
+    if (!empty($plan)) {
+        print_r($plan->toArray());
+    }
 }
