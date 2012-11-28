@@ -21,12 +21,12 @@
  */
 namespace Paydirt\Test\Paydirt\Chargify;
 
-class Customer extends \Paydirt\Test\TestCase {
+class Product extends \Paydirt\Test\TestCase {
 	public function test_get() {
-        $customer = $this->driver->getObject('Customer',2528906);
-        $this->assertNotEmpty($customer,'Customer not found!');
-        if (!empty($customer)) {
-            $this->assertInstanceOf('\Paydirt\Chargify\Customer',$customer);
+        $product = $this->driver->getObject('Product','truck');
+        $this->assertNotEmpty($product,'Product not found!');
+        if (!empty($product)) {
+            $this->assertInstanceOf('\Paydirt\Chargify\Product',$product);
         }
 	}
 

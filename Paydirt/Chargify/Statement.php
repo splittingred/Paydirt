@@ -21,7 +21,7 @@
  */
 namespace Paydirt\Chargify;
 
-class Invoice extends Object implements \Paydirt\InvoiceInterface {
+class Statement extends Object implements \Paydirt\StatementInterface {
     public static $uri = 'statements';
     public static $rootNode = 'statement';
 

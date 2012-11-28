@@ -184,13 +184,10 @@ interface AdjustmentInterface {
 interface CouponInterface {
 }
 interface RedemptionInterface {}
-interface InvoiceInterface {
+interface StatementInterface {
 
 }
 interface LineItemInterface {
-}
-interface PlanInterface {
-
 }
 interface SubscriptionInterface {
     public function cancel();
